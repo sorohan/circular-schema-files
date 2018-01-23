@@ -1,14 +1,15 @@
 const ramlParser = require('raml-1-parser');
 
-let err = false;
-
-ramlParser.loadApi('./api.raml', [], { rejectOnErrors: true })
-  .then(() => {
-    console.log('success parsing raml');
+ramlParser.load('./api.raml')
+  .then((test) => {
+    if (test.errors) {
+      console.log(test.errors);
+    } else {
+      console.log('success parsing raml');
+    }
   })
-  .catch((err) => {
-    console.log(err);
-    err = true;
+  .catch((error) => {
+    console.log(error);
   });
 
 /*
@@ -16,7 +17,6 @@ const $RefParser = require('json-schema-ref-parser');
 $RefParser.dereference('./schemas/one.json', (err, schema) => {
   if (err) {
     console.error(err);
-    err = true;
   }
   else {
     console.log('success dereferencing json');
@@ -24,8 +24,4 @@ $RefParser.dereference('./schemas/one.json', (err, schema) => {
   }
 });
 */
-
-if (err) {
-  process.exit(1);
-}
 
