@@ -1,0 +1,14 @@
+#%RAML 1.0
+---
+title: Testing Circular Schema Files
+version: v2
+baseUri: "{version}"
+types:
+  CircularType:
+    type: !include schemas/one.json
+
+/foos:
+  post:
+    body:
+      application/json:
+        type: CircularType
